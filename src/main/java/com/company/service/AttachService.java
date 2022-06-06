@@ -39,7 +39,7 @@ public class AttachService {
 
         File file = getFile(multipartFile);
 
-        var uploads = googleDriveServiceImp.upload(file.getName(), file.getPath(), MimTypes.JPG, folder);
+        var uploads = googleDriveServiceImp.upload(file.getName(), file.getPath(), folder);
 
         AttachEntity attachEntity = new AttachEntity();
         attachEntity.setId(uploads.getId());
