@@ -35,11 +35,11 @@ public class AttachService {
     private String attachFolder;
 
 
-    public AttachDTO upload(MultipartFile multipartFile, String folder) {
+    public AttachDTO upload(MultipartFile multipartFile) {
 
         File file = getFile(multipartFile);
 
-        var uploads = googleDriveServiceImp.upload(file.getName(), file.getPath(), folder);
+        var uploads = googleDriveServiceImp.upload(file.getName(), file.getPath(), MimTypes.JPG);
 
         AttachEntity attachEntity = new AttachEntity();
         attachEntity.setId(uploads.getId());

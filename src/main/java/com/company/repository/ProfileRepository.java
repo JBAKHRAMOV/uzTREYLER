@@ -7,5 +7,6 @@ import java.util.Optional;
 
 public interface ProfileRepository extends JpaRepository<ProfileEntity, String> {
 
-    Optional<ProfileEntity> findByEmailAndDeletedDateNotNull(String email);
+    Optional<ProfileEntity> findByEmailAndDeletedDateIsNull(String email);
+    Optional<ProfileEntity> findByIdAndDeletedDateIsNull(String id);
 }

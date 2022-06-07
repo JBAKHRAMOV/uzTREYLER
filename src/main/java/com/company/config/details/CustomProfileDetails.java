@@ -22,7 +22,7 @@ public class CustomProfileDetails implements UserDetails {
 
     @Override
     public String getPassword() {
-        return null;
+        return entity.getPassword();
     }
 
     @Override

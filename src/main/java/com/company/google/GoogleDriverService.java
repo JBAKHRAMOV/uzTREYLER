@@ -6,7 +6,6 @@ public interface GoogleDriverService {
 
     File upload(String fileName,String filePath,String fileType);
 
-    File upload(String fileName, String filePath, String fileType, String folder);
 
     Boolean delete(String fileID);
 

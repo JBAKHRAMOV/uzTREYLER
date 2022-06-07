@@ -21,6 +21,7 @@ import java.util.Collections;
 @Slf4j
 public class GoogleDriveServiceImp implements GoogleDriverService {
 
+
     @Value("${service_account_email}")
     private String serviceAccountEmail;
 
@@ -30,26 +31,16 @@ public class GoogleDriveServiceImp implements GoogleDriverService {
     @Value("${service_account_key}")
     private String serviceAccountKey;
 
-    @Value("${drive_key_location}")
-    private String location;
-
-    @Value("${server_key_location}")
-    private String serverLocation;
-
+    @Value("${folder_id}")
+    private String folderID;
 
     public Drive getDriveService() {
         Drive service = null;
         try {
-            java.io.File key = null;
 
-                key = Paths.get(serverLocation + this.serviceAccountKey).toFile();
-                if (!key.exists()){
-                    URL resource = GoogleDriveServiceImp.class.getResource(location + this.serviceAccountKey);
-                    assert resource != null;
-                    key = Paths.get(resource.toURI()).toFile();
-                }
-
-
+            URL resource = GoogleDriveServiceImp.class.getResource("/" + this.serviceAccountKey);
+            assert resource != null;
+            java.io.File key = Paths.get(resource.toURI()).toFile();
             HttpTransport httpTransport = new NetHttpTransport();
             JacksonFactory jsonFactory = new JacksonFactory();
 
@@ -59,6 +50,7 @@ public class GoogleDriveServiceImp implements GoogleDriverService {
                     .setServiceAccountPrivateKeyFromP12File(key).build();
             service = new Drive.Builder(httpTransport, jsonFactory, credential).setApplicationName(applicationName)
                     .setHttpRequestInitializer(credential).build();
+            return service;
         } catch (Exception e) {
             log.error(e.getMessage());
 
@@ -69,25 +61,17 @@ public class GoogleDriveServiceImp implements GoogleDriverService {
     }
 
 
+
     @Override
     public File upload(String fileName, String filePath, String fileType) {
-        return null;
-    }
-
-    @Override
-    public File upload(String fileName, String filePath, String fileType, String folder) {
         File file = new File();
         try {
-
             java.io.File fileUpload = new java.io.File(filePath);
-
             File fileMetadata = new File();
             fileMetadata.setMimeType(fileType);
             fileMetadata.setName(fileName);
-            fileMetadata.setParents(Collections.singletonList(folder));
-
+            fileMetadata.setParents(Collections.singletonList(folderID));
             FileContent fileContent = new FileContent(fileType, fileUpload);
-
             file = getDriveService().files().create(fileMetadata, fileContent)
                     .setFields("id,webContentLink,webViewLink").execute();
         } catch (Exception e) {
@@ -95,6 +79,7 @@ public class GoogleDriveServiceImp implements GoogleDriverService {
         }
         return file;
     }
+
 
     public Boolean delete(String fileId) {
         try {
@@ -105,4 +90,7 @@ public class GoogleDriveServiceImp implements GoogleDriverService {
         }
         return false;
     }
+
+
+
 }

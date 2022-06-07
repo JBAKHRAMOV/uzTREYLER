@@ -1,0 +1,19 @@
+
+
+
+###
+POST http://localhost:8080/api/v1/attach/upload
+Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiI0MDI4MDk4MTgxMzk2NmRhMDE4MTM5NjZmMmZmMDAwMCIsImlhdCI6MTY1NDU3MjAxOSwiaXNzIjoibWF6Z2kgcHJvZHVjdGlvbiJ9.qr1JLGKD8flQg03pntcp7ku9LEDes3s8FiMEQSd4B2U
+Content-Type: multipart/form-data; boundary=WebAppBoundary
+
+--WebAppBoundary
+Content-Disposition: form-data; name="file"; filename="caravan.mp4"
+
+< C:\Users\Admin\Desktop\1043597560_284892911_131189616201796_6785058905510751377_n.mp4
+--WebAppBoundary--
+
+
+
+###
+DELETE http://localhost:8080/api/v1/attach/delete/1uYWoKOBTv-MLD3NknEBpOI_XdcAMIaGL
+

@@ -1,19 +1,25 @@
-package com.company.entity;
+package com.company.dto;
 
 import com.company.enums.ProfileRole;
 import com.company.enums.ProfileStatus;
 import lombok.Getter;
 import lombok.Setter;
+import org.hibernate.annotations.CreationTimestamp;
 
-import javax.persistence.Entity;
+import javax.persistence.Column;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
 import java.time.LocalDateTime;
 
-@Entity
 @Getter
 @Setter
-public class ProfileEntity extends BaseEntity {
+public class ProfileDTO {
+
+    private String id;
+
+    private LocalDateTime createdDate;
+
+    private LocalDateTime updatedDate;
 
     private String name;
 
@@ -21,14 +27,13 @@ public class ProfileEntity extends BaseEntity {
 
     private String password;
 
-
     private String email;
 
     private LocalDateTime deletedDate;
 
-    @Enumerated(EnumType.STRING)
     private ProfileStatus status;
 
-    @Enumerated(EnumType.STRING)
     private ProfileRole role;
+
+    private  String token;
 }

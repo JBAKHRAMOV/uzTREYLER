@@ -14,9 +14,9 @@ public class CustomProfileDetailsService implements UserDetailsService {
     private final ProfileRepository profileRepository;
 
     @Override
-    public CustomProfileDetails loadUserByUsername(String email) throws UsernameNotFoundException {
+    public CustomProfileDetails loadUserByUsername(String id) throws UsernameNotFoundException {
         ProfileEntity entity = profileRepository
-                .findByEmailAndDeletedDateNotNull(email)
+                .findByIdAndDeletedDateIsNull(id)
                 .orElseThrow(() -> new UsernameNotFoundException("Profile Not Found"));
 
         return new CustomProfileDetails(entity);
