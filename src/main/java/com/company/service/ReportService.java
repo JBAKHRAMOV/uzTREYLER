@@ -20,7 +20,7 @@ import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
-public class RepoetService {
+public class ReportService {
     private final ReportRepository reportRepository;
 
     public ReportDTO create(ReportRequestDTO dto) {

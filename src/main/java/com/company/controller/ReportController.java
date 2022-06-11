@@ -2,7 +2,7 @@ package com.company.controller;
 
 import com.company.dto.ReportDTO;
 import com.company.dto.request.ReportRequestDTO;
-import com.company.service.RepoetService;
+import com.company.service.ReportService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.RequiredArgsConstructor;
@@ -16,7 +16,7 @@ import org.springframework.web.bind.annotation.*;
 @Api(tags = "Report")
 @RequiredArgsConstructor
 public class ReportController {
-    private final RepoetService repoetService;
+    private final ReportService repoetService;
 
     @ApiOperation(value = "Create report", notes = "Method used for create report", nickname = "Bilol")
     @PostMapping("")
