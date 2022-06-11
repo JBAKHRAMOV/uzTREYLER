@@ -92,6 +92,7 @@ public class KinoService {
      * PUBLIC
      */
 
+
     public KinoDTO getById(String trailerId) {
 
         KinoEntity entity = get(trailerId);
