@@ -132,4 +132,14 @@ public class KinoService {
         return dto;
     }
 
+    public PageImpl<KinoDTO> getByCategoryId(int page, int size, String categoryID) {
+
+        Pageable pageable = PageRequest.of(page, size);
+
+        Page<KinoEntity> entityPage = kinoRepository.findByCategoryId(categoryID, pageable);
+
+        List<KinoDTO> kinoDTOS = entityPage.stream().map(this::toDTO).toList();
+
+        return new PageImpl<>(kinoDTOS,pageable,entityPage.getTotalElements());
+    }
 }

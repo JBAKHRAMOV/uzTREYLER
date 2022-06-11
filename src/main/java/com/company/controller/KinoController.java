@@ -79,5 +79,16 @@ public class KinoController {
     }
 
 
+    @GetMapping("/{categoryId}/category")
+    @ApiOperation(value = "get Trailer ", notes = "method for Trailer get by categoryId")
+    @PreAuthorize("hasAnyRole('ADMIN','USER')")
+    public ResponseEntity<PageImpl<KinoDTO>> getByCategotyId(@RequestParam(value = "page", defaultValue = "0") int page,
+                                                             @RequestParam(value = "size", defaultValue = "10") int size,
+                                                             @PathVariable("categoryId") String categoryID) {
+        log.info("kino get by  category with: {}", EntityDetails.getProfile());
+        return ResponseEntity.ok(kinoService.getByCategoryId(page, size,categoryID));
+    }
+
+
 }
 

@@ -22,4 +22,6 @@ public interface KinoRepository extends JpaRepository<KinoEntity, String> {
     @Transactional
     @Query("update KinoEntity  set  deletedDate = ?2 where  id = ?1")
     void updateDeleteDate(String trailerId, LocalDateTime deletedDate);
+
+    Page<KinoEntity> findByCategoryId(String categoryID, Pageable pageable);
 }
