@@ -48,6 +48,16 @@ public class CategoryService {
         return true;
     }
 
+    public CategoryDTO update(CategoryDTO dto,String categoryId){
+        CategoryDTO categoryDTO = get(categoryId);
+
+        categoryRepository.updateName(dto.getName(),categoryId);
+
+        categoryDTO.setName(dto.getName());
+
+        return categoryDTO;
+    }
+
 
     /**
      * PUBLIC
