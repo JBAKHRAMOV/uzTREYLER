@@ -11,10 +11,8 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
-import org.springframework.data.web.PageableArgumentResolver;
 import org.springframework.stereotype.Service;
 
-import java.security.interfaces.XECKey;
 import java.util.List;
 
 @Service
@@ -25,11 +23,10 @@ public class CategoryService {
     private final CategoryRepository categoryRepository;
 
 
-
-    public CategoryDTO create(CategoryDTO dto){
+    public CategoryDTO create(CategoryDTO dto) {
 
         CategoryEntity entity1 = categoryRepository.findByName(dto.getName()).orElse(null);
-        if(entity1 != null){
+        if (entity1 != null) {
             log.warn("Category all ready exists!");
             throw new ItemAlreadyExistsException("Category all ready exists!");
         }
@@ -40,6 +37,15 @@ public class CategoryService {
         categoryRepository.save(entity);
 
         return toDTO(entity);
+    }
+
+    public Boolean delete(String categoryId) {
+
+        get(categoryId);
+
+        categoryRepository.deleteById(categoryId);
+
+        return true;
     }
 
 
@@ -55,10 +61,10 @@ public class CategoryService {
 
         List<CategoryDTO> categoryDTOS = entityPage.stream().map(this::toDTO).toList();
 
-        return new PageImpl<>(categoryDTOS,pageable,entityPage.getTotalElements());
+        return new PageImpl<>(categoryDTOS, pageable, entityPage.getTotalElements());
     }
 
-    public CategoryDTO get(String id){
+    public CategoryDTO get(String id) {
         CategoryEntity entity = categoryRepository.findById(id).orElseThrow(() -> {
             log.warn("Category not found!");
             throw new ItemNotFoundException("Category  not found!");
@@ -67,13 +73,12 @@ public class CategoryService {
         return toDTO(entity);
     }
 
-    public CategoryDTO toDTO(CategoryEntity entity){
+    public CategoryDTO toDTO(CategoryEntity entity) {
         CategoryDTO dto = new CategoryDTO();
         dto.setName(entity.getName());
         dto.setId(entity.getId());
         dto.setCreatedDate(entity.getCreatedDate());
         return dto;
     }
-
 
 }

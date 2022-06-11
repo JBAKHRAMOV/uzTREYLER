@@ -38,6 +38,15 @@ public class CategoryController {
     }
 
 
+    @DeleteMapping("/{categoryId}")
+    @ApiOperation(value = "delete ", notes = "method for delete Category")
+    @PreAuthorize("hasAnyRole('ADMIN')")
+    public ResponseEntity<Boolean> delete(@PathVariable("categoryId") String categoryId) {
+        log.info("category delete with: {}", EntityDetails.getProfile());
+        return ResponseEntity.ok(categoryService.delete(categoryId));
+    }
+
+
     /**
      * PUBLIC
      */
@@ -53,11 +62,10 @@ public class CategoryController {
     }
 
 
-
     @GetMapping("/{categoryId}")
     @ApiOperation(value = "get  Category ", notes = "method for Category  get all")
     @PreAuthorize("hasAnyRole('ADMIN','USER')")
-    public ResponseEntity<CategoryDTO> get(@PathVariable("categoryId") String categoryId){
+    public ResponseEntity<CategoryDTO> get(@PathVariable("categoryId") String categoryId) {
         log.info("category get with: {}", EntityDetails.getProfile());
         return ResponseEntity.ok(categoryService.get(categoryId));
     }
