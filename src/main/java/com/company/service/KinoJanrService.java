@@ -9,6 +9,8 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
+import java.util.Optional;
+
 import static com.company.service.AuthService.toDTO;
 
 @Service
@@ -44,8 +46,30 @@ public class KinoJanrService {
 
     public KinoJanrDTO update(KinoJanrDTO dto,String id){
 
+        KinoEntity kinoEntity = kinoService.get(dto.getKinoId());
+
+        if (kinoEntity == null) {
+            log.warn("kino not found! : {}", dto.getKinoId());
+            throw new ItemNotFoundException("kino not found!");
+        }
 
 
+        KinoJanrEntity kinoJanrEntity = kinoJanrRepository.findById(id).orElseThrow(() -> {
+
+            log.warn("Kino janr not found! : {}", id);
+
+            throw new ItemNotFoundException("Kino janr not found!");
+        });
+
+
+
+
+        kinoJanrEntity.setKinoId(dto.getKinoId());
+        kinoJanrEntity.setJanrId(dto.getJanrId());
+
+        kinoJanrRepository.save(kinoJanrEntity);
+
+        return toDTO(kinoJanrEntity);
     }
 
     public KinoJanrDTO toDTO(KinoJanrEntity entity){
