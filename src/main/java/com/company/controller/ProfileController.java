@@ -11,5 +11,8 @@ import org.springframework.web.bind.annotation.RestController;
 @Api(tags = "Profile")
 @RequiredArgsConstructor
 public class ProfileController {
+
     private final ProfileService profileService;
+
+
 }

@@ -20,9 +20,9 @@ public class JanrService {
     private final JanrRepository janrRepository;
 
 
-    public JanrDTO create(JanrDTO dto){
+    public JanrDTO create(JanrDTO dto) {
 
-        janrRepository.findByName(dto.getName()).orElseThrow(()->{
+        janrRepository.findByName(dto.getName()).orElseThrow(() -> {
             throw new ItemNotFoundException("janr all ready exists!");
         });
 
@@ -37,11 +37,11 @@ public class JanrService {
         return dto;
     }
 
-    public JanrDTO update(JanrDTO dto,String janrId){
+    public JanrDTO update(JanrDTO dto, String janrId) {
         JanrEntity entity = janrRepository.findById(janrId).orElseThrow(() -> {
             throw new ItemNotFoundException("Janr not found!");
         });
-        janrRepository.findByName(dto.getName()).orElseThrow(()->{
+        janrRepository.findByName(dto.getName()).orElseThrow(() -> {
             throw new ItemAlreadyExistsException("Janr all ready exists!");
         });
 
@@ -52,7 +52,7 @@ public class JanrService {
 
     }
 
-    public PageImpl<JanrDTO> get(int page, int size){
+    public PageImpl<JanrDTO> get(int page, int size) {
 
         Pageable pageable = PageRequest.of(page, size);
 
@@ -60,11 +60,11 @@ public class JanrService {
 
         List<JanrDTO> janrDTOS = entityPage.stream().map(this::toDTO).toList();
 
-        return new PageImpl<>(janrDTOS,pageable,entityPage.getTotalElements());
+        return new PageImpl<>(janrDTOS, pageable, entityPage.getTotalElements());
 
     }
 
-    public Boolean delete(String janrId){
+    public Boolean delete(String janrId) {
         JanrEntity entity = janrRepository.findById(janrId).orElseThrow(() -> {
             throw new ItemNotFoundException("Janr not found!");
         });
@@ -74,7 +74,13 @@ public class JanrService {
         return true;
     }
 
-    public JanrDTO toDTO(JanrEntity entity){
+    public JanrDTO get(String id) {
+        return toDTO(janrRepository.findById(id).orElseThrow(() -> {
+            throw new ItemNotFoundException("Janr not found!");
+        }));
+    }
+
+    public JanrDTO toDTO(JanrEntity entity) {
         JanrDTO dto = new JanrDTO();
         dto.setName(entity.getName());
         dto.setCreatedDate(entity.getCreatedDate());
@@ -82,9 +88,6 @@ public class JanrService {
         dto.setUpdatedDate(entity.getUpdatedDate());
         return dto;
     }
-
-
-
 
 
 }
