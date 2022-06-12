@@ -43,4 +43,13 @@ public class KinoJanrController {
     }
 
 
+    @DeleteMapping("/{id}")
+    @ApiOperation(value = "delete", notes = "method for delete kino-janr")
+    @PreAuthorize("hasAnyRole('ADMIN')")
+    public ResponseEntity<Boolean> delete(@PathVariable("id") String id) {
+        log.info("delete janr in kino with: {}", EntityDetails.getProfile());
+        return ResponseEntity.ok(kinoJanrService.delete(id));
+    }
+
+
 }

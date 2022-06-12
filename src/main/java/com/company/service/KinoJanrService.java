@@ -7,6 +7,7 @@ import com.company.exception.ItemNotFoundException;
 import com.company.repository.KinoJanrRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.data.domain.PageImpl;
 import org.springframework.stereotype.Service;
 
 import java.util.Optional;
@@ -70,6 +71,16 @@ public class KinoJanrService {
         kinoJanrRepository.save(kinoJanrEntity);
 
         return toDTO(kinoJanrEntity);
+    }
+
+    public Boolean delete(String id){
+        kinoJanrRepository.findById(id).orElseThrow(()->{
+            throw new ItemNotFoundException("kino janr not found!");
+        });
+
+        kinoJanrRepository.deleteById(id);
+
+        return true;
     }
 
     public KinoJanrDTO toDTO(KinoJanrEntity entity){
