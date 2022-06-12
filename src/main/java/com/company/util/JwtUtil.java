@@ -10,9 +10,9 @@ public class JwtUtil {
 
     private final static String secretKey = "kalitso'z";
 
-    public static String encode(String phone) {
+    public static String encode(String email) {
         JwtBuilder jwtBuilder = Jwts.builder();
-        jwtBuilder.setSubject(phone);
+        jwtBuilder.setSubject(email);
         jwtBuilder.setIssuedAt(new Date());
         jwtBuilder.signWith(SignatureAlgorithm.HS256, secretKey);
 //        jwtBuilder.setExpiration(new Date(System.currentTimeMillis() + (60 * 60 * 1000 * 24)));

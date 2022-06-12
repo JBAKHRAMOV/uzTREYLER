@@ -32,7 +32,6 @@ public class AuthController {
 
     }
 
-
     @PostMapping("")
     @ApiOperation(value = "registration",notes = "method for registration")
     public ResponseEntity<ProfileDTO> registration(@RequestBody @Valid RegistrationDTO dto){
