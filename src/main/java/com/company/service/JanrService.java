@@ -13,6 +13,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
@@ -22,9 +23,9 @@ public class JanrService {
 
     public JanrDTO create(JanrDTO dto) {
 
-        janrRepository.findByName(dto.getName()).orElseThrow(() -> {
-            throw new ItemNotFoundException("janr all ready exists!");
-        });
+        Optional<JanrEntity> optional = janrRepository.findByName(dto.getName());
+
+        if(optional.isPresent()) throw new ItemAlreadyExistsException("janr all ready exists! ");
 
         JanrEntity entity = new JanrEntity();
 

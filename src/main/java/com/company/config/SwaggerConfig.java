@@ -39,7 +39,7 @@ public class SwaggerConfig {
         return new ApiInfo("Caravan",
                 "Api documentation for Caravan Project",
                 "1.0",
-                "t.me/Javlondev",
+                "",
                 new springfox.documentation.service.Contact("", "", ""),
                 "",
                 "",

@@ -1,0 +1,10 @@
+
+
+###
+POST http://localhost:8080/api/v1/category
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiI0MDI4MDk4MTgxMzk2NmRhMDE4MTM5NjZmMmZmMDAwMCIsImlhdCI6MTY1NTA5MzIxNiwiaXNzIjoibWF6Z2kgcHJvZHVjdGlvbiJ9.itKSkl0JfQEMo4M_k8331nfP9sjYtDzO0yl9Et5HpVY
+
+{
+  "name": "Hind kinolari"
+}

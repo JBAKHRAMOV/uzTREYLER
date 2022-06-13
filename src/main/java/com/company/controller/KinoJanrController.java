@@ -26,7 +26,7 @@ public class KinoJanrController {
     @PostMapping("")
     @ApiOperation(value = "create", notes = "method for set janr in kino ")
     @PreAuthorize("hasAnyRole('ADMIN')")
-    public ResponseEntity<KinoJanrDTO> create(@RequestParam @RequestBody KinoJanrDTO dto) {
+    public ResponseEntity<KinoJanrDTO> create(@org.springframework.web.bind.annotation.RequestBody  KinoJanrDTO dto) {
         log.info("set janr in kino with: {}", EntityDetails.getProfile());
         return ResponseEntity.ok(kinoJanrService.create(dto));
     }

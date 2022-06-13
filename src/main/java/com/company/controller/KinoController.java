@@ -30,7 +30,7 @@ public class KinoController {
     @PostMapping("")
     @ApiOperation(value = "trailer", notes = "method for trailer upload")
     @PreAuthorize("hasAnyRole('ADMIN')")
-    public ResponseEntity<KinoDTO> trailerUpload(@RequestParam @RequestBody KinoDTO dto) {
+    public ResponseEntity<KinoDTO> trailerUpload(@org.springframework.web.bind.annotation.RequestBody KinoDTO dto) {
         log.info("kino upload with: {}", EntityDetails.getProfile());
         return ResponseEntity.ok(kinoService.trailerUpload(dto));
     }

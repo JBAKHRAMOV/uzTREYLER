@@ -10,6 +10,7 @@ import com.company.entity.ProfileEntity;
 import com.company.enums.ProfileStatus;
 import com.company.exception.AppBadRequestException;
 import com.company.exception.EmailAlreadyExistsException;
+import com.company.exception.ItemAlreadyExistsException;
 import com.company.exception.ItemNotFoundException;
 import com.company.repository.ProfileRepository;
 import com.company.util.JwtUtil;
@@ -36,7 +37,7 @@ public class ProfileService {
         Optional<ProfileEntity> optional = profileRepository.findByEmailAndDeletedDateIsNull(dto.getEmail());
         if (optional.isPresent()) {
             log.error("Email Already Exits : {}" , dto);
-            throw new EmailAlreadyExistsException("Email Already Exits");
+            throw new ItemAlreadyExistsException("Email Already Exits");
         }
         ProfileEntity entity = new ProfileEntity();
         entity.setName(dto.getName());
@@ -118,4 +119,5 @@ public class ProfileService {
         profileRepository.save(entity);
         return true;
     }
+
 }

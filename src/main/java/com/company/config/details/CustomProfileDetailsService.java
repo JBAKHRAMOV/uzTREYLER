@@ -1,6 +1,7 @@
 package com.company.config.details;
 
 import com.company.entity.ProfileEntity;
+import com.company.exception.ItemNotFoundException;
 import com.company.repository.ProfileRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -17,7 +18,7 @@ public class CustomProfileDetailsService implements UserDetailsService {
     public CustomProfileDetails loadUserByUsername(String id) throws UsernameNotFoundException {
         ProfileEntity entity = profileRepository
                 .findByIdAndDeletedDateIsNull(id)
-                .orElseThrow(() -> new UsernameNotFoundException("Profile Not Found"));
+                .orElseThrow(() ->  {throw new ItemNotFoundException("Profile Not Found");});
 
         return new CustomProfileDetails(entity);
     }
