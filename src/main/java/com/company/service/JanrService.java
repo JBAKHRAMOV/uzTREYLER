@@ -42,9 +42,11 @@ public class JanrService {
         JanrEntity entity = janrRepository.findById(janrId).orElseThrow(() -> {
             throw new ItemNotFoundException("Janr not found!");
         });
-        janrRepository.findByName(dto.getName()).orElseThrow(() -> {
-            throw new ItemAlreadyExistsException("Janr all ready exists!");
-        });
+
+        Optional<JanrEntity> optional = janrRepository.findByName(dto.getName());
+
+        if(optional.isPresent()) throw new ItemAlreadyExistsException("janr all ready exists! ");
+
 
         entity.setName(dto.getName());
         janrRepository.save(entity);
