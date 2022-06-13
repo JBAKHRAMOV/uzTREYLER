@@ -62,7 +62,7 @@ public class JanrController {
 
 
     @GetMapping("")
-    @PreAuthorize("hasAnyRole('ADMIIN','USER')")
+    @PreAuthorize("hasAnyRole('ADMIN','USER')")
     @ApiOperation(value = "Get", notes = "method for get janr  list")
     public ResponseEntity<PageImpl<JanrDTO>> get(@RequestParam(value = "page", defaultValue = "0") int page,
                                                  @RequestParam(value = "size", defaultValue = "10") int size) {
