@@ -9,6 +9,7 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
+import java.util.List;
 import java.util.Optional;
 
 public interface KinoRepository extends JpaRepository<KinoEntity, String> {
@@ -25,4 +26,7 @@ public interface KinoRepository extends JpaRepository<KinoEntity, String> {
 
     Page<KinoEntity> findByCategoryId(String categoryID, Pageable pageable);
     Page<KinoEntity> findByName(String name, Pageable pageable);
+
+
+
 }

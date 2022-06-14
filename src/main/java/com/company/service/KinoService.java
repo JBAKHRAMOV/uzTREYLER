@@ -2,12 +2,15 @@ package com.company.service;
 
 import com.company.config.details.EntityDetails;
 import com.company.dto.kino.KinoDTO;
+import com.company.dto.kino.KinoSearchDTO;
 import com.company.dto.kino.KinoUpdateDTO;
 import com.company.dto.request.FindByNameDTO;
 import com.company.entity.KinoEntity;
 import com.company.enums.KinoStatus;
 import com.company.exception.ItemNotFoundException;
+import com.company.mapper.KinoMapper;
 import com.company.repository.KinoRepository;
+import com.company.repository.filter.KinoFilterRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.*;
@@ -24,6 +27,8 @@ public class KinoService {
     private final KinoRepository kinoRepository;
 
     private final AttachService attachService;
+
+    private final KinoFilterRepository kinoFilterRepository;
 
 
     /**
@@ -131,6 +136,22 @@ public class KinoService {
         return dto;
     }
 
+    public KinoDTO toDTO(KinoMapper mapper){
+        KinoDTO dto = new KinoDTO();
+
+        dto.setId(mapper.getId());
+        dto.setCountry(mapper.getCountry());
+        dto.setCategoryId(mapper.getCategoryId());
+        dto.setName(mapper.getName());
+        dto.setPreviewAttachLink(mapper.getPreviewAttachLink());
+        dto.setCreatedDate(mapper.getCreatedDate());
+        dto.setTranslationLanguage(mapper.getTranslationLanguage());
+        dto.setVideoLink(mapper.getVideoLink());
+        dto.setType(mapper.getType());
+
+        return dto;
+    }
+
     public PageImpl<KinoDTO> getByCategoryId(int page, int size, String categoryID) {
 
         Pageable pageable = PageRequest.of(page, size);
@@ -147,5 +168,11 @@ public class KinoService {
         Page<KinoEntity> entityPage = kinoRepository.findByName(dto.getName(), pageable);
         List<KinoDTO> kinoDTOS = entityPage.stream().map(this::toDTO).toList();
         return new PageImpl<>(kinoDTOS,pageable,entityPage.getTotalElements());
+    }
+
+
+    public List<KinoDTO> filterKino(KinoSearchDTO dto){
+        return  kinoFilterRepository.filter(dto).
+                stream().map(this::toDTO).toList();
     }
 }

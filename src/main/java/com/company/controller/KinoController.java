@@ -2,6 +2,7 @@ package com.company.controller;
 
 import com.company.config.details.EntityDetails;
 import com.company.dto.kino.KinoDTO;
+import com.company.dto.kino.KinoSearchDTO;
 import com.company.dto.kino.KinoUpdateDTO;
 import com.company.dto.request.FindByNameDTO;
 import com.company.service.KinoService;
@@ -14,6 +15,8 @@ import org.springframework.data.domain.PageImpl;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RestController
 @RequestMapping("/api/v1/kino")
@@ -87,7 +90,7 @@ public class KinoController {
                                                              @RequestParam(value = "size", defaultValue = "10") int size,
                                                              @PathVariable("categoryId") String categoryID) {
         log.info("kino get by  category with: {}", EntityDetails.getProfile());
-        return ResponseEntity.ok(kinoService.getByCategoryId(page, size,categoryID));
+        return ResponseEntity.ok(kinoService.getByCategoryId(page, size, categoryID));
     }
 
     @GetMapping("/name")
@@ -97,9 +100,18 @@ public class KinoController {
                                                        @RequestParam(value = "size", defaultValue = "10") int size,
                                                        @org.springframework.web.bind.annotation.RequestBody FindByNameDTO dto) {
         log.info("kino get by  category with: {}", EntityDetails.getProfile());
-        return ResponseEntity.ok(kinoService.getByName(page, size,dto));
+        return ResponseEntity.ok(kinoService.getByName(page, size, dto));
     }
 
+
+    @PostMapping("/filter")
+    @ApiOperation(value = "get Trailer by filter", notes = "method for get Trailer by filter")
+    @PreAuthorize("hasAnyRole('ADMIN','USER')")
+    public ResponseEntity<List<KinoDTO>> filter(@org.springframework.web.bind.annotation.RequestBody
+                                                KinoSearchDTO dto) {
+        log.info("get Trailer by filter: {}", EntityDetails.getProfile());
+        return ResponseEntity.ok(kinoService.filterKino(dto));
+    }
 
 
 }

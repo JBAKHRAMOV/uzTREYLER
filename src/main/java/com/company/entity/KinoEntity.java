@@ -40,7 +40,7 @@ public class KinoEntity extends BaseEntity {
     @JoinColumn(name = "category_id", insertable = false, updatable = false)
     private CategoryEntity category;
     @Column
-    private int year;
+    private Integer year;
     @Column
     private LocalDateTime publishedDate;
     @Column
