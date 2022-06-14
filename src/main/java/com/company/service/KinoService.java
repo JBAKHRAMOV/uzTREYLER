@@ -1,6 +1,7 @@
 package com.company.service;
 
 import com.company.config.details.EntityDetails;
+import com.company.dto.LikeCountDTO;
 import com.company.dto.kino.KinoDTO;
 import com.company.dto.kino.KinoSearchDTO;
 import com.company.dto.kino.KinoUpdateDTO;
@@ -26,7 +27,7 @@ public class KinoService {
 
     private final KinoRepository kinoRepository;
 
-    private final AttachService attachService;
+    private final LikeService likeService;
 
     private final KinoFilterRepository kinoFilterRepository;
 
@@ -110,7 +111,7 @@ public class KinoService {
 
     public PageImpl<KinoDTO> getAll(int page,int size) {
 
-        Pageable pageable = PageRequest.of(page, size);
+        Pageable pageable = PageRequest.of(page, size, Sort.by(Sort.Direction.DESC, "createdDate"));
 
         Page<KinoEntity> entityPage = kinoRepository.findAllByDeletedDateIsNull(pageable);
 
@@ -156,7 +157,7 @@ public class KinoService {
 
         Pageable pageable = PageRequest.of(page, size);
 
-        Page<KinoEntity> entityPage = kinoRepository.findByCategoryId(categoryID, pageable);
+        Page<KinoEntity> entityPage = kinoRepository.findByCategoryIdAndDeletedDateIsNull(categoryID, pageable);
 
         List<KinoDTO> kinoDTOS = entityPage.stream().map(this::toDTO).toList();
 
@@ -165,7 +166,7 @@ public class KinoService {
 
     public PageImpl<KinoDTO> getByName(int page, int size, FindByNameDTO dto) {
         Pageable pageable = PageRequest.of(page, size, Sort.by(Sort.Direction.DESC, "createdDate"));
-        Page<KinoEntity> entityPage = kinoRepository.findByName(dto.getName(), pageable);
+        Page<KinoEntity> entityPage = kinoRepository.findByNameAndDeletedDateIsNull(dto.getName(), pageable);
         List<KinoDTO> kinoDTOS = entityPage.stream().map(this::toDTO).toList();
         return new PageImpl<>(kinoDTOS,pageable,entityPage.getTotalElements());
     }
@@ -175,4 +176,5 @@ public class KinoService {
         return  kinoFilterRepository.filter(dto).
                 stream().map(this::toDTO).toList();
     }
+
 }

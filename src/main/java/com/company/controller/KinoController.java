@@ -103,6 +103,19 @@ public class KinoController {
         return ResponseEntity.ok(kinoService.getByName(page, size, dto));
     }
 
+    @GetMapping("/reyting")
+    @ApiOperation(value = "get Trailer by name", notes = "method for Trailer get by name")
+    @PreAuthorize("hasAnyRole('ADMIN','USER')")
+    public ResponseEntity<PageImpl<KinoDTO>> getByReyting(@RequestParam(value = "page", defaultValue = "0") int page,
+                                                       @RequestParam(value = "size", defaultValue = "10") int size) {
+        log.info("kino get by  category with: {}", EntityDetails.getProfile());
+        return ResponseEntity.ok(kinoService.getByReyting(page, size));
+    }
+
+
+
+
+
 
     @PostMapping("/filter")
     @ApiOperation(value = "get Trailer by filter", notes = "method for get Trailer by filter")

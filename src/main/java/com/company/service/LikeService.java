@@ -3,11 +3,13 @@ package com.company.service;
 import com.company.config.details.EntityDetails;
 import com.company.dto.CommentLikeDTO;
 import com.company.dto.KinoLikeDTO;
+import com.company.dto.LikeCountDTO;
 import com.company.dto.request.CommentLikeRequestDTO;
 import com.company.dto.request.KinoLikeRequestDTO;
 import com.company.entity.CommentLikeEntity;
 import com.company.entity.KinoLikeEntity;
 import com.company.entity.ProfileEntity;
+import com.company.enums.LikeStatus;
 import com.company.enums.ProfileRole;
 import com.company.exception.AppForbiddenException;
 import com.company.exception.ItemNotFoundException;
@@ -141,6 +143,15 @@ public class LikeService {
         dto.setStatus(entity.getStatus());
         dto.setCommentId(entity.getCommentId());
         dto.setCreatedDate(entity.getCreatedDate());
+        return dto;
+    }
+
+    public LikeCountDTO getLikeCount(String kinoId){
+        int likeCount = kinoLikeRepository.countByKinoIdAndStatus(kinoId, LikeStatus.LIKE);
+        int dislikeCount = kinoLikeRepository.countByKinoIdAndStatus(kinoId, LikeStatus.DISLIKE);
+        LikeCountDTO dto = new LikeCountDTO();
+        dto.setLikeCount(likeCount);
+        dto.setDislikeCOunt(dislikeCount);
         return dto;
     }
 }
