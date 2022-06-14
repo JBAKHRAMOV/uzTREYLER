@@ -42,6 +42,8 @@ public class KinoEntity extends BaseEntity {
     @Column
     private Integer year;
     @Column
+    private Long viewCount;
+    @Column
     private LocalDateTime publishedDate;
     @Column
     private LocalDateTime deletedDate;

@@ -177,4 +177,25 @@ public class KinoService {
                 stream().map(this::toDTO).toList();
     }
 
+    public PageImpl<KinoDTO> getByReyting(int page, int size) {
+        return null;
+    }
+
+    public void updateViewCount(String kinoId) {
+        KinoEntity entity = get(kinoId);
+        if (entity.getViewCount() == null){
+            entity.setViewCount(1L);
+            kinoRepository.save(entity);
+        } else {
+            kinoRepository.increaseViewCount(kinoId);
+        }
+
+    }
+
+    public PageImpl<KinoDTO> getByViewCount(int page, int size) {
+        Pageable pageable = PageRequest.of(page, size, Sort.by(Sort.Direction.DESC, "viewCount"));
+        Page<KinoEntity> entityPage = kinoRepository.findAllByDeletedDateIsNull(pageable);
+        List<KinoDTO> kinoDTOS = entityPage.stream().map(this::toDTO).toList();
+        return new PageImpl<>(kinoDTOS,pageable,entityPage.getTotalElements());
+    }
 }

@@ -104,7 +104,7 @@ public class KinoController {
     }
 
     @GetMapping("/reyting")
-    @ApiOperation(value = "get Trailer by name", notes = "method for Trailer get by name")
+    @ApiOperation(value = "get Trailer ", notes = "method for Trailer get by reyting")
     @PreAuthorize("hasAnyRole('ADMIN','USER')")
     public ResponseEntity<PageImpl<KinoDTO>> getByReyting(@RequestParam(value = "page", defaultValue = "0") int page,
                                                        @RequestParam(value = "size", defaultValue = "10") int size) {
@@ -112,6 +112,21 @@ public class KinoController {
         return ResponseEntity.ok(kinoService.getByReyting(page, size));
     }
 
+    @GetMapping("/view-count")
+    @ApiOperation(value = "get Trailer ", notes = "method for Trailer get by view count")
+    @PreAuthorize("hasAnyRole('ADMIN','USER')")
+    public ResponseEntity<PageImpl<KinoDTO>> getByViewCount(@RequestParam(value = "page", defaultValue = "0") int page,
+                                                          @RequestParam(value = "size", defaultValue = "10") int size) {
+        log.info("kino get by  category with: {}", EntityDetails.getProfile());
+        return ResponseEntity.ok(kinoService.getByViewCount(page, size));
+    }
+
+    @ApiOperation(value = "Increase Count", notes = "Method used for increase video count", nickname = "Bilol")
+    @GetMapping("/view/{id}")//4
+    public ResponseEntity<?> increaseViewCount(@PathVariable("id") String  kinoId) {
+        kinoService.updateViewCount(kinoId);
+        return ResponseEntity.ok().build();
+    }
 
 
 

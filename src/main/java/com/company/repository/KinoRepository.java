@@ -6,6 +6,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
@@ -27,6 +28,8 @@ public interface KinoRepository extends JpaRepository<KinoEntity, String> {
     Page<KinoEntity> findByCategoryIdAndDeletedDateIsNull(String categoryID, Pageable pageable);
     Page<KinoEntity> findByNameAndDeletedDateIsNull(String name, Pageable pageable);
 
-
-
+    @Modifying
+    @Transactional
+    @Query("update KinoEntity as k set  k.viewCount=k.viewCount + 1 where  k.id=:kinoId")
+    void increaseViewCount(@Param("kinoId") String kinoId);
 }
