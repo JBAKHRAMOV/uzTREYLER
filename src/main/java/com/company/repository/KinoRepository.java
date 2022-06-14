@@ -24,4 +24,5 @@ public interface KinoRepository extends JpaRepository<KinoEntity, String> {
     void updateDeleteDate(String trailerId, LocalDateTime deletedDate);
 
     Page<KinoEntity> findByCategoryId(String categoryID, Pageable pageable);
+    Page<KinoEntity> findByName(String name, Pageable pageable);
 }

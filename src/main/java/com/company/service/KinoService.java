@@ -3,16 +3,14 @@ package com.company.service;
 import com.company.config.details.EntityDetails;
 import com.company.dto.kino.KinoDTO;
 import com.company.dto.kino.KinoUpdateDTO;
+import com.company.dto.request.FindByNameDTO;
 import com.company.entity.KinoEntity;
 import com.company.enums.KinoStatus;
 import com.company.exception.ItemNotFoundException;
 import com.company.repository.KinoRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageImpl;
-import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.*;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
@@ -141,6 +139,13 @@ public class KinoService {
 
         List<KinoDTO> kinoDTOS = entityPage.stream().map(this::toDTO).toList();
 
+        return new PageImpl<>(kinoDTOS,pageable,entityPage.getTotalElements());
+    }
+
+    public PageImpl<KinoDTO> getByName(int page, int size, FindByNameDTO dto) {
+        Pageable pageable = PageRequest.of(page, size, Sort.by(Sort.Direction.DESC, "createdDate"));
+        Page<KinoEntity> entityPage = kinoRepository.findByName(dto.getName(), pageable);
+        List<KinoDTO> kinoDTOS = entityPage.stream().map(this::toDTO).toList();
         return new PageImpl<>(kinoDTOS,pageable,entityPage.getTotalElements());
     }
 }

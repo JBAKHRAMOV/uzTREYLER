@@ -3,6 +3,7 @@ package com.company.controller;
 import com.company.config.details.EntityDetails;
 import com.company.dto.kino.KinoDTO;
 import com.company.dto.kino.KinoUpdateDTO;
+import com.company.dto.request.FindByNameDTO;
 import com.company.service.KinoService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -88,6 +89,17 @@ public class KinoController {
         log.info("kino get by  category with: {}", EntityDetails.getProfile());
         return ResponseEntity.ok(kinoService.getByCategoryId(page, size,categoryID));
     }
+
+    @GetMapping("/name")
+    @ApiOperation(value = "get Trailer by name", notes = "method for Trailer get by name")
+    @PreAuthorize("hasAnyRole('ADMIN','USER')")
+    public ResponseEntity<PageImpl<KinoDTO>> getByName(@RequestParam(value = "page", defaultValue = "0") int page,
+                                                       @RequestParam(value = "size", defaultValue = "10") int size,
+                                                       @org.springframework.web.bind.annotation.RequestBody FindByNameDTO dto) {
+        log.info("kino get by  category with: {}", EntityDetails.getProfile());
+        return ResponseEntity.ok(kinoService.getByName(page, size,dto));
+    }
+
 
 
 }

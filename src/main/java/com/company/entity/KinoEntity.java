@@ -39,7 +39,8 @@ public class KinoEntity extends BaseEntity {
     @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "category_id", insertable = false, updatable = false)
     private CategoryEntity category;
-
+    @Column
+    private int year;
     @Column
     private LocalDateTime publishedDate;
     @Column
